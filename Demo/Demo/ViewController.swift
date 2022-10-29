@@ -17,8 +17,11 @@ class ViewController: NSViewController {
     }
     
     var body: some NSView {
-        CKVStack(.equalCentering) { stackView in
-            CKText("Single-Line Single-Line Single-Line")
+        CKVStack(.equalSpacing) { stackView in
+            CKText(
+                "Single-Line Single-Line Single-Line Single-Line Single-Line Single-Line Single-Line Single-Line"
+            )
+            .constraints(maxWidth: 380)
             
             CKText(
                 "Wrapping Text Left-Aligned. Wrapping Text Left-Aligned. Wrapping Text Left-Aligned. Wrapping Text Left-Aligned.",
@@ -52,15 +55,32 @@ class ViewController: NSViewController {
             SubView()
             
             CKHStack {
-                CKTextField(placeholder: "More Text Here")
+                CKTextField(placeholder: "Enter some text here")
                     .store(in: &textField)
                 CKButton(title: "Print to Console") { [weak self] in
                     let str = self?.textField?.stringValue ?? ""
                     print(str)
                 }
             }
+            
+//            NilView()
+            
+            // TODO: this crashes - not sure why
+//            switch Bool.random() {
+//            case true:
+//                CKText("true")
+//            case false:
+//                CKText("false")
+//            }
+            
+            // TODO: this crashes - not sure why
+//            if Bool.random() {
+//                CKText("true")
+//            } else {
+//                CKText("false")
+//            }
         }
-        .constraints(minHeight: 350, minWidth: 460)
+        .constraints(minHeight: 350, minWidth: 300)
         .constraints(padding: .standardToSuperview())
     }
 }
@@ -70,4 +90,8 @@ func SubView() -> some NSView {
         CKText("Hello")
         CKText("World")
     }
+}
+
+func NilView() -> (some NSView)? {
+    .none
 }

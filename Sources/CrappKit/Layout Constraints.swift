@@ -77,23 +77,24 @@ extension ConstraintInsets {
 extension NSView {
     private func addConstraints(
         other: NSView,
-        insets: ConstraintInsets
+        insets: ConstraintInsets,
+        isActive: Bool = true
     ) {
         if let topOffset = insets.top {
             topAnchor.constraint(equalTo: other.topAnchor, constant: topOffset)
-                .isActive = true
+                .isActive = isActive
         }
         if let bottomOffset = insets.bottom {
             bottomAnchor.constraint(equalTo: other.bottomAnchor, constant: -bottomOffset)
-                .isActive = true
+                .isActive = isActive
         }
         if let leadingOffset = insets.leading {
             leadingAnchor.constraint(equalTo: other.leadingAnchor, constant: leadingOffset)
-                .isActive = true
+                .isActive = isActive
         }
         if let trailingOffset = insets.trailing {
             trailingAnchor.constraint(equalTo: other.trailingAnchor, constant: -trailingOffset)
-                .isActive = true
+                .isActive = isActive
         }
     }
 }
@@ -102,9 +103,11 @@ extension NSView {
     /// Add constraints to view.
     /// Must call only after adding view to superview.
     @discardableResult
-    public func constraints(insets: ConstraintInsets) -> Self {
-        guard let superview = superview else { return self }
-        addConstraints(other: superview, insets: insets)
+    public func constraints(insets: ConstraintInsets,
+                            to parent: NSView? = nil,
+                            isActive: Bool = true) -> Self {
+        guard let sv = parent ?? superview else { return self }
+        addConstraints(other: sv, insets: insets, isActive: isActive)
         return self
     }
     
@@ -152,6 +155,30 @@ extension NSView {
         return self
     }
     
+    /// Add maximum height and/or width constraints to the view.
+    @discardableResult
+    public func constraints(maxHeight: CGFloat? = nil, maxWidth: CGFloat? = nil) -> Self {
+        if let maxHeight = maxHeight {
+            if frame.height > maxHeight {
+                frame = .init(
+                    origin: frame.origin,
+                    size: .init(width: frame.size.width, height: maxHeight)
+                )
+            }
+            heightAnchor.constraint(lessThanOrEqualToConstant: maxHeight).isActive = true
+        }
+        if let maxWidth = maxWidth {
+            if frame.width > maxWidth {
+                frame = .init(
+                    origin: frame.origin,
+                    size: .init(width: maxWidth, height: frame.size.height)
+                )
+            }
+            widthAnchor.constraint(lessThanOrEqualToConstant: maxWidth).isActive = true
+        }
+        return self
+    }
+    
     /// Adds center anchor constraints to the view.
     @discardableResult
     public func constraints(centerX: Bool = false, centerY: Bool = false) -> Self {
@@ -168,5 +195,15 @@ extension NSView {
         enclosingView.addSubview(self)
         addConstraints(other: enclosingView, insets: insets)
         return enclosingView
+    }
+    
+    /// Sets the priority for all constraints of the view.
+    @discardableResult
+    public func constraintsPriority(_ priority: NSLayoutConstraint.Priority) -> Self {
+        constraints.forEach {
+            print("setting priority")
+            $0.priority = priority
+        }
+        return self
     }
 }

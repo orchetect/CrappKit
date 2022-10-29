@@ -12,4 +12,29 @@ public enum CKViewBuilder {
     public static func buildBlock(_ components: NSView...) -> [some NSView] {
         components
     }
+    
+    public static func buildEither(first component: [some NSView]) -> [some NSView] {
+        component
+    }
+
+    public static func buildEither(second component: [some NSView]) -> [some NSView] {
+        component
+    }
+    
+    public static func buildOptional(_ component: [some NSView]?) -> [some NSView] {
+        component ?? []
+    }
+    
+    public static func buildBlock(_ components: [NSView]...) -> [some NSView] {
+        // TODO: this crashes - not sure why
+        components.flatMap { $0 }
+    }
+
+    public static func buildExpression(_ expression: some NSView) -> [some NSView] {
+        [expression]
+    }
+
+    public static func buildExpression(_ expression: Void) -> [some NSView] {
+        [NSView]()
+    }
 }

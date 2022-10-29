@@ -7,21 +7,31 @@
 import AppKit
 
 public enum CKTextStyle {
-    case `default`
+    case singleLine(NSLineBreakMode)
     case wrapping
 }
 
 @discardableResult
 public func CKText(
     _ stringValue: String,
-    style: CKTextStyle = .default
+    style: CKTextStyle = .singleLine(.byTruncatingTail)
 ) -> NSTextField {
     let base: NSTextField = {
         switch style {
-        case .default:
+        case let .singleLine(linebreakMode):
             return NSTextField(labelWithString: stringValue)
+                .withView { view in
+                    view.usesSingleLineMode = true
+                    view.lineBreakMode = linebreakMode
+                    view.allowsDefaultTighteningForTruncation = true
+                    view.cell?.wraps = false
+                    view.cell?.truncatesLastVisibleLine = true
+                }
         case .wrapping:
             return NSTextField(wrappingLabelWithString: stringValue)
+                .withView { view in
+                    view.usesSingleLineMode = false
+                }
         }
     }()
     
