@@ -15,14 +15,14 @@ class ViewController: NSViewController {
     }
     
     var body: some NSView {
-        CKVStack(.equalSpacing) {
+        CKVStack(distribution: .equalSpacing) {
             CKText("Hello world")
             
             CKTextField(placeholder: "Enter some text here")
                 .constraints(width: 200)
                 .store(in: &textField)
             
-            CKHStack(.equalSpacing) {
+            CKHStack {
                 CKButton(title: "One") { print("One") }
                 CKButton(title: "Two") { print("Two") }
             }
@@ -81,10 +81,10 @@ Various NSView modifiers are provided.
 
 Various NSView modifiers to apply NSLayoutConstraints are provided.
 
-- `constraints(insets:)` - adds constraints to the view's four sides
 - `constraints(height:width:)` - adds static height and/or width constraints
 - `constraints(minHeight:minWidth:)` - adds minimum height and/or width constraints
 - `constraints(maxHeight:maxWidth:)` - adds maximum height and/or width constraints
-- `constraints(centerX:centerY:)` - adds center X and/or Y constraints
 - `constraints(padding:)` - wraps the view in an enclosing NSView with the given padding insets
 - `constraintsPriority(_:)` - sets the priority for all constraints applied to the view
+- `constraints(insets:)` - adds constraints to the view's four sides (*experimental*)
+- `constraints(centerX:centerY:)` - adds center X and/or Y constraints (*experimental*)
