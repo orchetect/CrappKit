@@ -1,3 +1,5 @@
 # DeclarativeAppKit
 
-A description of this package.
+Pseudo-declarative AppKit.
+
+Brings some small QoL improvements to programmatic AppKit code.
