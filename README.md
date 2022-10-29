@@ -18,6 +18,7 @@ class ViewController: NSViewController {
             CKText("Hello world")
             
             CKTextField(placeholder: "Enter some text here")
+                .constraints(width: 200)
                 .store(in: &textField)
             
             CKHStack(.equalSpacing) {
@@ -25,6 +26,7 @@ class ViewController: NSViewController {
                 CKButton(title: "Two") { print("Two") }
             }
         }
+        .constraints(padding: .standardToSuperview())
     }
 }
 ```
@@ -46,7 +48,7 @@ See the Demo project for usage examples.
 
 ## NSView Modifiers
 
-Various modifiers are provided.
+Various NSView modifiers are provided.
 
 `NSView`
 - `autoresizingMask(_:)` - set autoresizing mask for the view
@@ -62,7 +64,7 @@ Various modifiers are provided.
 
 ## NSView NSLayoutConstraint Modifiers
 
-Various NSView NSLayoutConstraint modifiers are provided.
+Various NSView modifiers to apply NSLayoutConstraints are provided.
 
 - `constraints(insets:)` - adds constraints to the view's four sides
 - `constraints(height:width:)` - adds static height and/or width constraints
