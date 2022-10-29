@@ -1,8 +1,8 @@
 # Cr*appKit*
 
-Ever wish programmatic AppKit UI was more like SwiftUI?
+Sometimes SwiftUI is not possible (deployment < macOS 10.15) but you wish programmatic AppKit UI was more like SwiftUI.
 
-Enter CrappKit: The (not too) crappy pseudo-declarative AppKit UI.
+Enter CrappKit: The (not too) crappy pseudo-declarative AppKit UI builder.
 
 ```swift
 class ViewController: NSViewController {
