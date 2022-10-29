@@ -106,7 +106,10 @@ extension NSView {
     public func constraints(insets: ConstraintInsets,
                             to parent: NSView? = nil,
                             isActive: Bool = true) -> Self {
-        guard let sv = parent ?? superview else { return self }
+        guard let sv = parent ?? superview else {
+            print("Unable to add constraints to \(self): Superview is nil.")
+            return self
+        }
         addConstraints(other: sv, insets: insets, isActive: isActive)
         return self
     }
@@ -182,7 +185,10 @@ extension NSView {
     /// Adds center anchor X and/or Y constraints to the view.
     @discardableResult
     public func constraints(centerX: Bool = false, centerY: Bool = false) -> Self {
-        guard let superview else { return self }
+        guard let superview else {
+            print("Unable to add constraints to \(self): Superview is nil.")
+            return self
+        }
         centerXAnchor.constraint(equalTo: superview.centerXAnchor).isActive = centerX
         centerYAnchor.constraint(equalTo: superview.centerYAnchor).isActive = centerY
         return self
