@@ -18,7 +18,7 @@ class ViewController: NSViewController {
     }
     
     var body: some NSView {
-        CKVStack(.equalSpacing) { stackView in
+        CKVStack(distribution: .equalSpacing) { stackView in
             CKText(
                 "Single-Line Single-Line Single-Line Single-Line Single-Line Single-Line Single-Line Single-Line"
             )
@@ -36,7 +36,7 @@ class ViewController: NSViewController {
             )
             .multilineTextAlignment(.center)
             
-            CKHStack(.equalSpacing) {
+            CKHStack(distribution: .equalSpacing) {
                 CKButton(title: "One") {
                     print("One")
                 }
@@ -82,8 +82,9 @@ class ViewController: NSViewController {
 //                CKText("false")
 //            }
         }
-        .constraints(minHeight: 350, minWidth: 300)
+        .constraints(minWidth: 300, minHeight: 350)
         .constraints(padding: .standardToSuperview())
+        .frame(size: .init(width: 620, height: 500))
     }
 }
 

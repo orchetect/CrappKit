@@ -23,56 +23,56 @@ extension CGFloat {
 
 public struct ConstraintInsets {
     public var top: CGFloat?
-    public var bottom: CGFloat?
     public var leading: CGFloat?
+    public var bottom: CGFloat?
     public var trailing: CGFloat?
 }
 
 extension ConstraintInsets {
     public static func zero(
         top: Bool = true,
-        bottom: Bool = true,
         leading: Bool = true,
+        bottom: Bool = true,
         trailing: Bool = true
     ) -> Self {
         .init(
             top: top ? 0 : nil,
-            bottom: bottom ? 0 : nil,
             leading: leading ? 0 : nil,
+            bottom: bottom ? 0 : nil,
             trailing: trailing ? 0 : nil
         )
     }
     
     public static func standardToSuperview(
         top: Bool = true,
-        bottom: Bool = true,
         leading: Bool = true,
+        bottom: Bool = true,
         trailing: Bool = true
     ) -> Self {
         .init(
             top: top ? .standardToSuperview : nil,
-            bottom: bottom ? .standardToSuperview : nil,
             leading: leading ? .standardToSuperview : nil,
+            bottom: bottom ? .standardToSuperview : nil,
             trailing: trailing ? .standardToSuperview : nil
         )
     }
     
     public static func standardToSibling(
         top: Bool = true,
-        bottom: Bool = true,
         leading: Bool = true,
+        bottom: Bool = true,
         trailing: Bool = true
     ) -> Self {
         .init(
             top: top ? .standardToSibling : nil,
-            bottom: bottom ? .standardToSibling : nil,
             leading: leading ? .standardToSibling : nil,
+            bottom: bottom ? .standardToSibling : nil,
             trailing: trailing ? .standardToSibling : nil
         )
     }
 }
 
-// MARK: - Methods
+// MARK: - NSView Modifier Methods
 
 extension NSView {
     private func addConstraints(
@@ -102,6 +102,7 @@ extension NSView {
 extension NSView {
     /// Add constraints to view.
     /// Must call only after adding view to superview.
+    @available(*, deprecated, message: "This method is experimental and may change. Currently, it won't work intuitively because it relies on the superview already being set to its parent.")
     @discardableResult
     public func constraints(insets: ConstraintInsets,
                             to parent: NSView? = nil,
@@ -114,16 +115,24 @@ extension NSView {
         return self
     }
     
-    /// Add static height and/or width constraints to the view.
+    /// Adds center anchor X and/or Y constraints to the view.
+    @available(*, deprecated, message: "This method is experimental and may change. Currently, it won't work intuitively because it relies on the superview already being set to its parent.")
     @discardableResult
-    public func constraints(height: CGFloat? = nil, width: CGFloat? = nil) -> Self {
-        if let height = height {
-            frame = .init(
-                origin: frame.origin,
-                size: .init(width: frame.size.width, height: height)
-            )
-            heightAnchor.constraint(equalToConstant: height).isActive = true
+    public func constraints(centerX: Bool = false, centerY: Bool = false) -> Self {
+        guard let superview else {
+            print("Unable to add constraints to \(self): Superview is nil.")
+            return self
         }
+        centerXAnchor.constraint(equalTo: superview.centerXAnchor).isActive = centerX
+        centerYAnchor.constraint(equalTo: superview.centerYAnchor).isActive = centerY
+        return self
+    }
+}
+
+extension NSView {
+    /// Add static width and/or height constraints to the view.
+    @discardableResult
+    public func constraints(width: CGFloat? = nil, height: CGFloat? = nil) -> Self {
         if let width = width {
             frame = .init(
                 origin: frame.origin,
@@ -131,21 +140,19 @@ extension NSView {
             )
             widthAnchor.constraint(equalToConstant: width).isActive = true
         }
+        if let height = height {
+            frame = .init(
+                origin: frame.origin,
+                size: .init(width: frame.size.width, height: height)
+            )
+            heightAnchor.constraint(equalToConstant: height).isActive = true
+        }
         return self
     }
     
-    /// Add minimum height and/or width constraints to the view.
+    /// Add minimum width and/or height constraints to the view.
     @discardableResult
-    public func constraints(minHeight: CGFloat? = nil, minWidth: CGFloat? = nil) -> Self {
-        if let minHeight = minHeight {
-            if frame.height < minHeight {
-                frame = .init(
-                    origin: frame.origin,
-                    size: .init(width: frame.size.width, height: minHeight)
-                )
-            }
-            heightAnchor.constraint(greaterThanOrEqualToConstant: minHeight).isActive = true
-        }
+    public func constraints(minWidth: CGFloat? = nil, minHeight: CGFloat? = nil) -> Self {
         if let minWidth = minWidth {
             if frame.width < minWidth {
                 frame = .init(
@@ -155,21 +162,21 @@ extension NSView {
             }
             widthAnchor.constraint(greaterThanOrEqualToConstant: minWidth).isActive = true
         }
+        if let minHeight = minHeight {
+            if frame.height < minHeight {
+                frame = .init(
+                    origin: frame.origin,
+                    size: .init(width: frame.size.width, height: minHeight)
+                )
+            }
+            heightAnchor.constraint(greaterThanOrEqualToConstant: minHeight).isActive = true
+        }
         return self
     }
     
-    /// Add maximum height and/or width constraints to the view.
+    /// Add maximum width and/or height constraints to the view.
     @discardableResult
-    public func constraints(maxHeight: CGFloat? = nil, maxWidth: CGFloat? = nil) -> Self {
-        if let maxHeight = maxHeight {
-            if frame.height > maxHeight {
-                frame = .init(
-                    origin: frame.origin,
-                    size: .init(width: frame.size.width, height: maxHeight)
-                )
-            }
-            heightAnchor.constraint(lessThanOrEqualToConstant: maxHeight).isActive = true
-        }
+    public func constraints(maxWidth: CGFloat? = nil, maxHeight: CGFloat? = nil) -> Self {
         if let maxWidth = maxWidth {
             if frame.width > maxWidth {
                 frame = .init(
@@ -179,18 +186,15 @@ extension NSView {
             }
             widthAnchor.constraint(lessThanOrEqualToConstant: maxWidth).isActive = true
         }
-        return self
-    }
-    
-    /// Adds center anchor X and/or Y constraints to the view.
-    @discardableResult
-    public func constraints(centerX: Bool = false, centerY: Bool = false) -> Self {
-        guard let superview else {
-            print("Unable to add constraints to \(self): Superview is nil.")
-            return self
+        if let maxHeight = maxHeight {
+            if frame.height > maxHeight {
+                frame = .init(
+                    origin: frame.origin,
+                    size: .init(width: frame.size.width, height: maxHeight)
+                )
+            }
+            heightAnchor.constraint(lessThanOrEqualToConstant: maxHeight).isActive = true
         }
-        centerXAnchor.constraint(equalTo: superview.centerXAnchor).isActive = centerX
-        centerYAnchor.constraint(equalTo: superview.centerYAnchor).isActive = centerY
         return self
     }
     
