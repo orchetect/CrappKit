@@ -10,6 +10,7 @@ import CrappKit
 class ViewController: NSViewController {
     weak var pathControl: CKPathControl?
     weak var textField: NSTextField?
+    weak var datePicker: NSDatePicker?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +53,7 @@ class ViewController: NSViewController {
             }
             .store(in: &pathControl)
             
-            SubView()
+            MyView()
             
             CKHStack {
                 CKTextField(placeholder: "Enter some text here")
@@ -62,6 +63,9 @@ class ViewController: NSViewController {
                     print(str)
                 }
             }
+            
+            NSDatePicker()
+                .store(in: &datePicker)
             
             // TODO: this crashes - not sure why
 //            switch Bool.random() {
@@ -83,7 +87,7 @@ class ViewController: NSViewController {
     }
 }
 
-func SubView() -> some NSView {
+func MyView() -> some NSView {
     CKHStack {
         CKText("Hello")
         CKText("World")

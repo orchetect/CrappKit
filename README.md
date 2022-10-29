@@ -7,7 +7,8 @@ Enter CrappKit: The (not too) crappy pseudo-declarative AppKit UI.
 ```swift
 class ViewController: NSViewController {
     weak var textField: NSTextField?
-
+    weak var datePicker: NSDatePicker?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view = body
@@ -25,8 +26,20 @@ class ViewController: NSViewController {
                 CKButton(title: "One") { print("One") }
                 CKButton(title: "Two") { print("Two") }
             }
+            
+            MyView()
+            
+            NSDatePicker()
+                .store(in: &datePicker)
         }
         .constraints(padding: .standardToSuperview())
+    }
+}
+
+func MyView() -> some NSView {
+    CKHStack {
+        CKText("Hello")
+        CKText("World")
     }
 }
 ```
@@ -38,6 +51,8 @@ Add to your project using Swift Package Manager and `import CrappKit`.
 See the Demo project for usage examples.
 
 ## DSL Types
+
+Any `NSView` subclass may be used directly in the view builder, but a number of intuitive convenience classes and constructors are provided.
 
 - `CKVStack` - vertical `NSStackView`
 - `CKHStack` - horizontal `NSStackView` 
