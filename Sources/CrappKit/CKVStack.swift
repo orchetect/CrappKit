@@ -10,7 +10,7 @@ import AppKit
 @discardableResult
 public func CKVStack(
     _ distribution: NSStackView.Distribution = .fill,
-    @NSViewBuilder _ builder: () -> [some NSView]
+    @CKViewBuilder _ builder: () -> [some NSView]
 ) -> NSStackView {
     NSStackView(.vertical, distribution, builder)
 }
@@ -19,7 +19,7 @@ public func CKVStack(
 @discardableResult @_disfavoredOverload
 public func CKVStack(
     _ distribution: NSStackView.Distribution = .fill,
-    @NSViewBuilder _ builder: (_ stackView: NSStackView) -> [some NSView]
+    @CKViewBuilder _ builder: (_ stackView: NSStackView) -> [some NSView]
 ) -> NSStackView {
     NSStackView(.vertical, distribution, builder)
 }

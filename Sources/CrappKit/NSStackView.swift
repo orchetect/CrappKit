@@ -13,7 +13,7 @@ extension NSStackView {
     internal convenience init(
         _ orientation: NSUserInterfaceLayoutOrientation,
         _ distribution: Distribution = .fill,
-        @NSViewBuilder _ builder: () -> [some NSView]
+        @CKViewBuilder _ builder: () -> [some NSView]
     ) {
         self.init(orientation, distribution, views: builder())
     }
@@ -22,7 +22,7 @@ extension NSStackView {
     internal convenience init(
         _ orientation: NSUserInterfaceLayoutOrientation,
         _ distribution: Distribution = .fill,
-        @NSViewBuilder _ builder: (_ stackView: NSStackView) -> [some NSView]
+        @CKViewBuilder _ builder: (_ stackView: NSStackView) -> [some NSView]
     ) {
         self.init(views: []) // must call self/super
         self.init(orientation, distribution, views: builder(self))
