@@ -44,13 +44,15 @@ func MyView() -> some NSView {
 }
 ```
 
+No bindings or fancy tricks are involved; this is not meant to replace SwiftUI. This library merely provides declarative sugar to build UI programmatically and reduce the boilerplate necessary.
+
 ## Usage
 
 Add to your project using Swift Package Manager and `import CrappKit`.
 
 See the Demo project for usage examples.
 
-## DSL Types
+### DSL Types
 
 Any `NSView` subclass may be used directly in the view builder, but a number of intuitive convenience classes and constructors are provided.
 
@@ -61,7 +63,7 @@ Any `NSView` subclass may be used directly in the view builder, but a number of 
 - `CKButton` - `NSButton` with action closure
 - `CKPathControl` - `NSPathControl` with properties and action closure
 
-## NSView Modifiers
+### NSView Modifiers
 
 Various NSView modifiers are provided.
 
@@ -77,7 +79,7 @@ Various NSView modifiers are provided.
 `NSTextField`
 - `multilineTextAlignment(:_)` - set alignment for wrapping text
 
-## NSView NSLayoutConstraint Modifiers
+### NSView NSLayoutConstraint Modifiers
 
 Various NSView modifiers to apply NSLayoutConstraints are provided.
 
@@ -88,3 +90,8 @@ Various NSView modifiers to apply NSLayoutConstraints are provided.
 - `constraintsPriority(_:)` - sets the priority for all constraints applied to the view
 - `constraints(insets:)` - adds constraints to the view's four sides (*experimental*)
 - `constraints(centerX:centerY:)` - adds center X and/or Y constraints (*experimental*)
+
+## Roadmap
+
+- More convenience views and view modifiers
+- Support for UIKit on iOS
