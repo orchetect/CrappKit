@@ -179,7 +179,7 @@ extension NSView {
         return self
     }
     
-    /// Adds center anchor constraints to the view.
+    /// Adds center anchor X and/or Y constraints to the view.
     @discardableResult
     public func constraints(centerX: Bool = false, centerY: Bool = false) -> Self {
         guard let superview else { return self }
