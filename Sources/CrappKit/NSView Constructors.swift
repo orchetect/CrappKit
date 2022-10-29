@@ -1,5 +1,7 @@
 //
 //  NSView Constructors.swift
+//  CrappKit • https://github.com/orchetect/CrappKit
+//  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 import Cocoa
@@ -35,17 +37,16 @@ extension NSStackView {
         self.init(views: []) // must call self/super
         self.orientation = orientation
         self.distribution = distribution
-        self.detachesHiddenViews = false
-        self.translatesAutoresizingMaskIntoConstraints = false
+        detachesHiddenViews = false
+        translatesAutoresizingMaskIntoConstraints = false
         views.forEach { self.addArrangedSubview($0) }
-        self.layout()
     }
 }
 
-// MARK: - NSVStack
+// MARK: - CKVStack
 
 @discardableResult
-public func NSVStack(
+public func CKVStack(
     _ distribution: NSStackView.Distribution = .fill,
     @NSViewBuilder _ builder: () -> [some NSView]
 ) -> NSStackView {
@@ -53,17 +54,17 @@ public func NSVStack(
 }
 
 @discardableResult @_disfavoredOverload
-public func NSVStack(
+public func CKVStack(
     _ distribution: NSStackView.Distribution = .fill,
     @NSViewBuilder _ builder: (_ stackView: NSStackView) -> [some NSView]
 ) -> NSStackView {
     NSStackView(.vertical, distribution, builder)
 }
 
-// MARK: - NSHStack
+// MARK: - CKHStack
 
 @discardableResult
-public func NSHStack(
+public func CKHStack(
     _ distribution: NSStackView.Distribution = .fill,
     @NSViewBuilder _ builder: () -> [some NSView]
 ) -> NSStackView {
@@ -71,7 +72,7 @@ public func NSHStack(
 }
 
 @discardableResult @_disfavoredOverload
-public func NSHStack(
+public func CKHStack(
     _ distribution: NSStackView.Distribution = .fill,
     @NSViewBuilder _ builder: (_ stackView: NSStackView) -> [some NSView]
 ) -> NSStackView {
@@ -80,33 +81,73 @@ public func NSHStack(
 
 // MARK: - Text
 
+public enum CKTextStyle {
+    case `default`
+    case wrapping
+}
+
 @discardableResult
-public func NSAttributedLabel(_ attributedStringValue: NSAttributedString) -> NSTextField {
+public func CKText(
+    _ stringValue: String,
+    style: CKTextStyle = .default
+) -> NSTextField {
+    let base: NSTextField = {
+        switch style {
+        case .default:
+            return NSTextField(labelWithString: stringValue)
+        case .wrapping:
+            return NSTextField(wrappingLabelWithString: stringValue)
+        }
+    }()
+    
+    return base
+        .withView { view in
+            view.translatesAutoresizingMaskIntoConstraints = false
+        }
+}
+
+@discardableResult
+public func CKText(_ attributedStringValue: NSAttributedString) -> NSTextField {
     NSTextField(labelWithAttributedString: attributedStringValue)
         .withView { view in
             view.translatesAutoresizingMaskIntoConstraints = false
         }
 }
 
-@discardableResult
-public func NSLabel(_ stringValue: String) -> NSTextField {
-    NSTextField(labelWithString: stringValue)
-        .withView { view in
-            view.translatesAutoresizingMaskIntoConstraints = false
-        }
-}
+// MARK: - Button
 
-@discardableResult
-public func NSWrappingLabel(_ stringValue: String) -> NSTextField {
-    NSTextField(wrappingLabelWithString: stringValue)
-        .withView { view in
-            view.translatesAutoresizingMaskIntoConstraints = false
-        }
+public class CKButton: NSButton {
+    private var actionHandler: () -> Void
+    
+    @discardableResult
+    public init(title: String, actionHandler: @escaping () -> Void) {
+        self.actionHandler = actionHandler
+        super.init(frame: .zero)
+        
+        // style
+        self.title = title
+        self.bezelStyle = .rounded
+        
+        // action
+        action = #selector(handleAction)
+        target = self
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    @IBAction
+    private func handleAction(_ sender: Any) {
+        actionHandler()
+    }
 }
 
 // MARK: - Path
 
-public class NSCustomPathControl: NSPathControl {
+// TODO: add handler for .popUp style when user selects a new folder
+public class CKPathControl: NSPathControl {
     private var actionHandler: (_ clickedURL: URL) -> Void
     
     @discardableResult
@@ -117,18 +158,25 @@ public class NSCustomPathControl: NSPathControl {
     ) {
         self.actionHandler = actionHandler
         super.init(frame: .zero)
+        
+        // style
         pathStyle = style
         self.url = url
-        action = #selector(self.handleAction)
+        
+        // action
+        action = #selector(handleAction)
+        target = self
     }
     
+    @available(*, unavailable)
     public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Methods
     
-    @IBAction private func handleAction(_ sender: Any) {
+    @IBAction
+    private func handleAction(_ sender: Any) {
         guard let url = clickedPathItem?.url else { return }
         actionHandler(url)
     }

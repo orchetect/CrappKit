@@ -1,5 +1,7 @@
 //
 //  NSView Modifiers.swift
+//  CrappKit • https://github.com/orchetect/CrappKit
+//  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 import Cocoa
@@ -19,14 +21,14 @@ extension NSView {
     /// Sets autoresizing mask behavior for the view.
     @discardableResult
     public func autoresizingMask(_ mask: AutoresizingMask) -> Self {
-        self.autoresizingMask = mask
+        autoresizingMask = mask
         return self
     }
     
     /// Disables autoresizing mask behavior for the view.
     @discardableResult
     public func disableAutoresizingMask() -> Self {
-        self.autoresizingMask = .none
+        autoresizingMask = .none
         return self
     }
     
@@ -41,7 +43,7 @@ extension NSView {
     
     @discardableResult
     public func frame(size: CGSize) -> Self {
-        self.frame.size = size
+        frame.size = size
         return self
     }
     

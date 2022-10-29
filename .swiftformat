@@ -23,7 +23,7 @@
 --funcattributes prev-line
 --groupedextension "MARK: %c"
 --guardelse auto
---header "\n {file}\n DeclarativeAppKit • https://github.com/orchetect/DeclarativeAppKit\n © {year} Steffan Andrews • Licensed under MIT License\n"
+--header "\n {file}\n CrappKit • https://github.com/orchetect/CrappKit\n © {year} Steffan Andrews • Licensed under MIT License\n"
 --hexgrouping 4,8
 --hexliteralcase uppercase
 --ifdef no-indent

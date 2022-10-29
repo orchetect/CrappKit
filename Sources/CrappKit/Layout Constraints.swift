@@ -1,5 +1,7 @@
 //
 //  Layout Constraints.swift
+//  CrappKit • https://github.com/orchetect/CrappKit
+//  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 import Cocoa
@@ -20,10 +22,10 @@ extension CGFloat {
 }
 
 public struct ConstraintInsets {
-    public var top: CGFloat? = nil
-    public var bottom: CGFloat? = nil
-    public var leading: CGFloat? = nil
-    public var trailing: CGFloat? = nil
+    public var top: CGFloat?
+    public var bottom: CGFloat?
+    public var leading: CGFloat?
+    public var trailing: CGFloat?
 }
 
 extension ConstraintInsets {
@@ -72,26 +74,27 @@ extension ConstraintInsets {
 
 // MARK: - Methods
 
-fileprivate func addConstraints(
-    view1: NSView,
-    view2: NSView,
-    insets: ConstraintInsets
-) {
-    if let topOffset = insets.top {
-        view1.topAnchor.constraint(equalTo: view2.topAnchor, constant: topOffset)
-            .isActive = true
-    }
-    if let bottomOffset = insets.bottom {
-        view1.bottomAnchor.constraint(equalTo: view2.bottomAnchor, constant: -bottomOffset)
-            .isActive = true
-    }
-    if let leadingOffset = insets.leading {
-        view1.leadingAnchor.constraint(equalTo: view2.leadingAnchor, constant: leadingOffset)
-            .isActive = true
-    }
-    if let trailingOffset = insets.trailing {
-        view1.trailingAnchor.constraint(equalTo: view2.trailingAnchor, constant: -trailingOffset)
-            .isActive = true
+extension NSView {
+    private func addConstraints(
+        other: NSView,
+        insets: ConstraintInsets
+    ) {
+        if let topOffset = insets.top {
+            topAnchor.constraint(equalTo: other.topAnchor, constant: topOffset)
+                .isActive = true
+        }
+        if let bottomOffset = insets.bottom {
+            bottomAnchor.constraint(equalTo: other.bottomAnchor, constant: -bottomOffset)
+                .isActive = true
+        }
+        if let leadingOffset = insets.leading {
+            leadingAnchor.constraint(equalTo: other.leadingAnchor, constant: leadingOffset)
+                .isActive = true
+        }
+        if let trailingOffset = insets.trailing {
+            trailingAnchor.constraint(equalTo: other.trailingAnchor, constant: -trailingOffset)
+                .isActive = true
+        }
     }
 }
 
@@ -101,9 +104,7 @@ extension NSView {
     @discardableResult
     public func constraints(insets: ConstraintInsets) -> Self {
         guard let superview = superview else { return self }
-        DeclarativeAppKit.addConstraints(view1: self,
-                                         view2: superview,
-                                         insets: insets)
+        addConstraints(other: superview, insets: insets)
         return self
     }
     
@@ -111,11 +112,17 @@ extension NSView {
     @discardableResult
     public func constraints(height: CGFloat? = nil, width: CGFloat? = nil) -> Self {
         if let height = height {
-            frame = .init(origin: frame.origin, size: .init(width: frame.size.width, height: height))
+            frame = .init(
+                origin: frame.origin,
+                size: .init(width: frame.size.width, height: height)
+            )
             heightAnchor.constraint(equalToConstant: height).isActive = true
         }
         if let width = width {
-            frame = .init(origin: frame.origin, size: .init(width: width, height: frame.size.height))
+            frame = .init(
+                origin: frame.origin,
+                size: .init(width: width, height: frame.size.height)
+            )
             widthAnchor.constraint(equalToConstant: width).isActive = true
         }
         return self
@@ -126,13 +133,19 @@ extension NSView {
     public func constraints(minHeight: CGFloat? = nil, minWidth: CGFloat? = nil) -> Self {
         if let minHeight = minHeight {
             if frame.height < minHeight {
-                frame = .init(origin: frame.origin, size: .init(width: frame.size.width, height: minHeight))
+                frame = .init(
+                    origin: frame.origin,
+                    size: .init(width: frame.size.width, height: minHeight)
+                )
             }
             heightAnchor.constraint(greaterThanOrEqualToConstant: minHeight).isActive = true
         }
         if let minWidth = minWidth {
             if frame.width < minWidth {
-                frame = .init(origin: frame.origin, size: .init(width: minWidth, height: frame.size.height))
+                frame = .init(
+                    origin: frame.origin,
+                    size: .init(width: minWidth, height: frame.size.height)
+                )
             }
             widthAnchor.constraint(greaterThanOrEqualToConstant: minWidth).isActive = true
         }
@@ -146,5 +159,14 @@ extension NSView {
         centerXAnchor.constraint(equalTo: superview.centerXAnchor).isActive = centerX
         centerYAnchor.constraint(equalTo: superview.centerYAnchor).isActive = centerY
         return self
+    }
+    
+    /// Embeds the view in a view with padding.
+    @discardableResult
+    public func constraints(padding insets: ConstraintInsets) -> NSView {
+        let enclosingView = NSView()
+        enclosingView.addSubview(self)
+        addConstraints(other: enclosingView, insets: insets)
+        return enclosingView
     }
 }

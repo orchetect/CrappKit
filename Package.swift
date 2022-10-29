@@ -3,21 +3,23 @@
 import PackageDescription
 
 let package = Package(
-    name: "DeclarativeAppKit",
+    name: "CrappKit",
     products: [
         .library(
-            name: "DeclarativeAppKit",
-            targets: ["DeclarativeAppKit"]),
+            name: "CrappKit",
+            targets: ["CrappKit"]
+        )
     ],
     dependencies: [
-        
     ],
     targets: [
         .target(
-            name: "DeclarativeAppKit",
-            dependencies: []),
+            name: "CrappKit",
+            dependencies: []
+        ),
         .testTarget(
-            name: "DeclarativeAppKitTests",
-            dependencies: ["DeclarativeAppKit"]),
+            name: "CrappKitTests",
+            dependencies: ["CrappKit"]
+        )
     ]
 )
