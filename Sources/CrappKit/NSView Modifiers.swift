@@ -66,6 +66,15 @@ extension NSView {
     }
 }
 
+extension NSTextField {
+    /// Sets the text alignment for `NSTextField`.
+    @discardableResult
+    public func multilineTextAlignment(_ alignment: NSTextAlignment) -> Self {
+        self.alignment = alignment
+        return self
+    }
+}
+
 // MARK: - NSView Subclass Generics
 
 public protocol NSViewProtocol: AnyObject { }

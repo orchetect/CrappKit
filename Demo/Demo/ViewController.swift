@@ -9,6 +9,7 @@ import CrappKit
 
 class ViewController: NSViewController {
     weak var pathControl: CKPathControl?
+    weak var textField: NSTextField?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,10 +19,18 @@ class ViewController: NSViewController {
     var body: some NSView {
         CKVStack(.equalCentering) { stackView in
             CKText("Single-Line Single-Line Single-Line")
+            
             CKText(
-                "Wrapping Text Wrapping Text Wrapping Text Wrapping Text Wrapping Text Wrapping Text",
+                "Wrapping Text Left-Aligned. Wrapping Text Left-Aligned. Wrapping Text Left-Aligned. Wrapping Text Left-Aligned.",
                 style: .wrapping
             )
+            .multilineTextAlignment(.left)
+            
+            CKText(
+                "Wrapping Text Center-Aligned. Wrapping Text Center-Aligned. Wrapping Text Center-Aligned. Wrapping Text Center-Aligned.",
+                style: .wrapping
+            )
+            .multilineTextAlignment(.center)
             
             CKHStack(.equalSpacing) {
                 CKButton(title: "One") {
@@ -34,22 +43,29 @@ class ViewController: NSViewController {
             
             CKPathControl(
                 style: .standard,
-                url: FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Desktop")
+                url: FileManager.default.desktopFolder
             ) { clickedURL in
-                print("Selected", clickedURL)
+                print("Clicked path:", clickedURL)
             }
             .store(in: &pathControl)
             
-            CustomView()
+            SubView()
             
-            CKText("More Text Here")
+            CKHStack {
+                CKTextField(placeholder: "More Text Here")
+                    .store(in: &textField)
+                CKButton(title: "Print to Console") { [weak self] in
+                    let str = self?.textField?.stringValue ?? ""
+                    print(str)
+                }
+            }
         }
-        .constraints(minHeight: 350, minWidth: 400)
+        .constraints(minHeight: 350, minWidth: 460)
         .constraints(padding: .standardToSuperview())
     }
 }
 
-func CustomView() -> some NSView {
+func SubView() -> some NSView {
     CKHStack {
         CKText("Hello")
         CKText("World")
