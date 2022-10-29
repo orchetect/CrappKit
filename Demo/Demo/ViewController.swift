@@ -63,8 +63,6 @@ class ViewController: NSViewController {
                 }
             }
             
-//            NilView()
-            
             // TODO: this crashes - not sure why
 //            switch Bool.random() {
 //            case true:
@@ -90,8 +88,4 @@ func SubView() -> some NSView {
         CKText("Hello")
         CKText("World")
     }
-}
-
-func NilView() -> (some NSView)? {
-    .none
 }
