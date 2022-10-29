@@ -66,7 +66,7 @@ extension NSView {
 
 // MARK: - NSView Subclass Generics
 
-protocol NSViewProtocol: AnyObject { }
+public protocol NSViewProtocol: AnyObject { }
 
 extension NSViewProtocol {
     /// Provides a mutation block to access the view.

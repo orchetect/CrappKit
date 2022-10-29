@@ -99,7 +99,7 @@ extension NSView {
     /// Add constraints to view.
     /// Must call only after adding view to superview.
     @discardableResult
-    func constraints(insets: ConstraintInsets) -> Self {
+    public func constraints(insets: ConstraintInsets) -> Self {
         guard let superview = superview else { return self }
         DeclarativeAppKit.addConstraints(view1: self,
                                          view2: superview,
@@ -109,7 +109,7 @@ extension NSView {
     
     /// Add static height and/or width constraints to the view.
     @discardableResult
-    func constraints(height: CGFloat? = nil, width: CGFloat? = nil) -> Self {
+    public func constraints(height: CGFloat? = nil, width: CGFloat? = nil) -> Self {
         if let height = height {
             frame = .init(origin: frame.origin, size: .init(width: frame.size.width, height: height))
             heightAnchor.constraint(equalToConstant: height).isActive = true
@@ -123,7 +123,7 @@ extension NSView {
     
     /// Add minimum height and/or width constraints to the view.
     @discardableResult
-    func constraints(minHeight: CGFloat? = nil, minWidth: CGFloat? = nil) -> Self {
+    public func constraints(minHeight: CGFloat? = nil, minWidth: CGFloat? = nil) -> Self {
         if let minHeight = minHeight {
             if frame.height < minHeight {
                 frame = .init(origin: frame.origin, size: .init(width: frame.size.width, height: minHeight))
@@ -141,7 +141,7 @@ extension NSView {
     
     /// Adds center anchor constraints to the view.
     @discardableResult
-    func constraints(centerX: Bool = false, centerY: Bool = false) -> Self {
+    public func constraints(centerX: Bool = false, centerY: Bool = false) -> Self {
         guard let superview else { return self }
         centerXAnchor.constraint(equalTo: superview.centerXAnchor).isActive = centerX
         centerYAnchor.constraint(equalTo: superview.centerYAnchor).isActive = centerY

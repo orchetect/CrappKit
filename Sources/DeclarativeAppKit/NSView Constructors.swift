@@ -4,36 +4,78 @@
 
 import Cocoa
 
-// MARK: - Stacks
+// MARK: - NSStackView (internal)
 
 extension NSStackView {
     @discardableResult
-    public convenience init(
+    internal convenience init(
+        _ orientation: NSUserInterfaceLayoutOrientation,
+        _ distribution: Distribution = .fill,
+        @NSViewBuilder _ builder: () -> [some NSView]
+    ) {
+        self.init(orientation, distribution, views: builder())
+    }
+    
+    @discardableResult @_disfavoredOverload
+    internal convenience init(
+        _ orientation: NSUserInterfaceLayoutOrientation,
+        _ distribution: Distribution = .fill,
+        @NSViewBuilder _ builder: (_ stackView: NSStackView) -> [some NSView]
+    ) {
+        self.init(views: []) // must call self/super
+        self.init(orientation, distribution, views: builder(self))
+    }
+    
+    @discardableResult @_disfavoredOverload
+    internal convenience init(
         _ orientation: NSUserInterfaceLayoutOrientation,
         _ distribution: Distribution = .fillEqually,
-        _ views: (_ superview: Self) -> [NSView]
+        views: [some NSView]
     ) {
         self.init(views: []) // must call self/super
         self.orientation = orientation
         self.distribution = distribution
-        views(self).forEach { self.addArrangedSubview($0) }
+        self.detachesHiddenViews = false
+        self.translatesAutoresizingMaskIntoConstraints = false
+        views.forEach { self.addArrangedSubview($0) }
+        self.layout()
     }
 }
 
+// MARK: - NSVStack
+
 @discardableResult
 public func NSVStack(
-    _ distribution: NSStackView.Distribution = .fillEqually,
-    views: (_ superview: NSStackView) -> [NSView]
+    _ distribution: NSStackView.Distribution = .fill,
+    @NSViewBuilder _ builder: () -> [some NSView]
 ) -> NSStackView {
-    NSStackView(.vertical, distribution, views)
+    NSStackView(.vertical, distribution, builder)
 }
+
+@discardableResult @_disfavoredOverload
+public func NSVStack(
+    _ distribution: NSStackView.Distribution = .fill,
+    @NSViewBuilder _ builder: (_ stackView: NSStackView) -> [some NSView]
+) -> NSStackView {
+    NSStackView(.vertical, distribution, builder)
+}
+
+// MARK: - NSHStack
 
 @discardableResult
 public func NSHStack(
-    _ distribution: NSStackView.Distribution = .fillEqually,
-    views: (_ superview: NSStackView) -> [NSView]
+    _ distribution: NSStackView.Distribution = .fill,
+    @NSViewBuilder _ builder: () -> [some NSView]
 ) -> NSStackView {
-    NSStackView(.horizontal, distribution, views)
+    NSStackView(.horizontal, distribution, builder)
+}
+
+@discardableResult @_disfavoredOverload
+public func NSHStack(
+    _ distribution: NSStackView.Distribution = .fill,
+    @NSViewBuilder _ builder: (_ stackView: NSStackView) -> [some NSView]
+) -> NSStackView {
+    NSStackView(.horizontal, distribution, builder)
 }
 
 // MARK: - Text
@@ -41,16 +83,25 @@ public func NSHStack(
 @discardableResult
 public func NSAttributedLabel(_ attributedStringValue: NSAttributedString) -> NSTextField {
     NSTextField(labelWithAttributedString: attributedStringValue)
+        .withView { view in
+            view.translatesAutoresizingMaskIntoConstraints = false
+        }
 }
 
 @discardableResult
 public func NSLabel(_ stringValue: String) -> NSTextField {
     NSTextField(labelWithString: stringValue)
+        .withView { view in
+            view.translatesAutoresizingMaskIntoConstraints = false
+        }
 }
 
 @discardableResult
 public func NSWrappingLabel(_ stringValue: String) -> NSTextField {
     NSTextField(wrappingLabelWithString: stringValue)
+        .withView { view in
+            view.translatesAutoresizingMaskIntoConstraints = false
+        }
 }
 
 // MARK: - Path
