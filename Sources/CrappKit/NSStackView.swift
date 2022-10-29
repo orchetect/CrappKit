@@ -12,31 +12,45 @@ extension NSStackView {
     @discardableResult
     internal convenience init(
         _ orientation: NSUserInterfaceLayoutOrientation,
+        _ alignment: NSLayoutConstraint.Attribute,
         _ distribution: Distribution = .fill,
         @CKViewBuilder _ builder: () -> [some NSView]
     ) {
-        self.init(orientation, distribution, views: builder())
+        self.init(
+            orientation,
+            alignment,
+            distribution,
+            views: builder()
+        )
     }
     
     @discardableResult @_disfavoredOverload
     internal convenience init(
         _ orientation: NSUserInterfaceLayoutOrientation,
+        _ alignment: NSLayoutConstraint.Attribute,
         _ distribution: Distribution = .fill,
         @CKViewBuilder _ builder: (_ stackView: NSStackView) -> [some NSView]
     ) {
         self.init(views: []) // must call self/super
-        self.init(orientation, distribution, views: builder(self))
+        self.init(
+            orientation,
+            alignment,
+            distribution,
+            views: builder(self)
+        )
     }
     
     @discardableResult @_disfavoredOverload
     internal convenience init(
         _ orientation: NSUserInterfaceLayoutOrientation,
-        _ distribution: Distribution = .fillEqually,
+        _ alignment: NSLayoutConstraint.Attribute,
+        _ distribution: Distribution,
         views: [some NSView]
     ) {
         self.init(views: []) // must call self/super
         self.orientation = orientation
         self.distribution = distribution
+        self.alignment = alignment
         detachesHiddenViews = false
         translatesAutoresizingMaskIntoConstraints = false
         views.forEach { self.addArrangedSubview($0) }

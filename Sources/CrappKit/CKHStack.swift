@@ -9,17 +9,19 @@ import AppKit
 /// Horizontal Stack (`NSStackView`)
 @discardableResult
 public func CKHStack(
-    _ distribution: NSStackView.Distribution = .fill,
+    alignment: NSLayoutConstraint.Attribute = .centerY,
+    distribution: NSStackView.Distribution = .fill,
     @CKViewBuilder _ builder: () -> [some NSView]
 ) -> NSStackView {
-    NSStackView(.horizontal, distribution, builder)
+    NSStackView(.horizontal, alignment, distribution, builder)
 }
 
 /// Horizontal Stack (`NSStackView`)
 @discardableResult @_disfavoredOverload
 public func CKHStack(
-    _ distribution: NSStackView.Distribution = .fill,
+    alignment: NSLayoutConstraint.Attribute = .centerY,
+    distribution: NSStackView.Distribution = .fill,
     @CKViewBuilder _ builder: (_ stackView: NSStackView) -> [some NSView]
 ) -> NSStackView {
-    NSStackView(.horizontal, distribution, builder)
+    NSStackView(.horizontal, alignment, distribution, builder)
 }
