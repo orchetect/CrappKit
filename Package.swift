@@ -4,6 +4,7 @@ import PackageDescription
 
 let package = Package(
     name: "CrappKit",
+    platforms: [.macOS(.v10_13)],
     products: [
         .library(
             name: "CrappKit",
