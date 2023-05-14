@@ -1,5 +1,5 @@
 //
-//  DeclarativeAppKitTests.swift
+//  CrappKitTests.swift
 //  CrappKit • https://github.com/orchetect/CrappKit
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
