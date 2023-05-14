@@ -1,8 +1,10 @@
 # Cr*appKit*
 
-Sometimes SwiftUI is not possible (deployment < macOS 10.15) but you wish programmatic AppKit UI was more like SwiftUI.
+For times when you need to use AppKit UI but wish it was more declarative like SwiftUI.
 
 Enter CrappKit: The (not too) crappy pseudo-declarative AppKit UI builder.
+
+This library was built for convenience and is not exhaustive but covers a lot of essential use cases. No bindings or fancy tricks are involved; this is not meant to replace SwiftUI. This merely provides declarative sugar to build UI programmatically and reduce the boilerplate necessary.
 
 ```swift
 class ViewController: NSViewController {
@@ -43,8 +45,6 @@ func MyView() -> some NSView {
     }
 }
 ```
-
-No bindings or fancy tricks are involved; this is not meant to replace SwiftUI. This library merely provides declarative sugar to build UI programmatically and reduce the boilerplate necessary.
 
 ## Usage
 
