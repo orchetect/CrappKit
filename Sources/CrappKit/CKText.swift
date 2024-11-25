@@ -6,13 +6,13 @@
 
 import AppKit
 
-public enum CKTextStyle {
+public enum CKTextStyle: Sendable {
     case singleLine(NSLineBreakMode)
     case wrapping
 }
 
 @discardableResult
-public func CKText(
+@MainActor public func CKText(
     _ stringValue: String,
     style: CKTextStyle = .singleLine(.byTruncatingTail)
 ) -> NSTextField {
@@ -42,7 +42,7 @@ public func CKText(
 }
 
 @discardableResult
-public func CKText(_ attributedStringValue: NSAttributedString) -> NSTextField {
+@MainActor public func CKText(_ attributedStringValue: NSAttributedString) -> NSTextField {
     NSTextField(labelWithAttributedString: attributedStringValue)
         .withView { view in
             view.translatesAutoresizingMaskIntoConstraints = false
@@ -50,7 +50,7 @@ public func CKText(_ attributedStringValue: NSAttributedString) -> NSTextField {
 }
 
 @discardableResult
-public func CKTextField(
+@MainActor public func CKTextField(
     _ initial: String = "",
     placeholder: String? = nil,
     formatter: Formatter? = nil

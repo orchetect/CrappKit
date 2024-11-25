@@ -8,7 +8,7 @@ import AppKit
 
 /// Horizontal Stack (`NSStackView`)
 @discardableResult
-public func CKHStack(
+@MainActor public func CKHStack(
     alignment: NSLayoutConstraint.Attribute = .centerY,
     distribution: NSStackView.Distribution = .fill,
     @CKViewBuilder _ builder: () -> [some NSView]
@@ -18,7 +18,7 @@ public func CKHStack(
 
 /// Horizontal Stack (`NSStackView`)
 @discardableResult @_disfavoredOverload
-public func CKHStack(
+@MainActor public func CKHStack(
     alignment: NSLayoutConstraint.Attribute = .centerY,
     distribution: NSStackView.Distribution = .fill,
     @CKViewBuilder _ builder: (_ stackView: NSStackView) -> [some NSView]

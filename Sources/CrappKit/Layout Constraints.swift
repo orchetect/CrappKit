@@ -16,10 +16,10 @@ import Cocoa
 // - 8.0 points between sibling views.
 extension CGFloat {
     // TODO: hardcoded value
-    public static var standardToSuperview: CGFloat = 20
+    public static let standardToSuperview: CGFloat = 20
     
     // TODO: hardcoded value
-    public static var standardToSibling: CGFloat = 8
+    public static let standardToSibling: CGFloat = 8
 }
 
 public struct ConstraintInsets {
