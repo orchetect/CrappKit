@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:6.0
 
 import PackageDescription
 
@@ -9,7 +9,6 @@ let package = Package(
         .library(name: "CrappKit", targets: ["CrappKit"])
     ],
     targets: [
-        .target(name: "CrappKit"),
-        .testTarget(name: "CrappKitTests", dependencies: ["CrappKit"])
+        .target(name: "CrappKit")
     ]
 )
