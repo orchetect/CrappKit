@@ -6,22 +6,10 @@ let package = Package(
     name: "CrappKit",
     platforms: [.macOS(.v10_15)],
     products: [
-        .library(
-            name: "CrappKit",
-            targets: ["CrappKit"]
-        )
-    ],
-    dependencies: [
-        // none
+        .library(name: "CrappKit", targets: ["CrappKit"])
     ],
     targets: [
-        .target(
-            name: "CrappKit",
-            dependencies: []
-        ),
-        .testTarget(
-            name: "CrappKitTests",
-            dependencies: ["CrappKit"]
-        )
+        .target(name: "CrappKit"),
+        .testTarget(name: "CrappKitTests", dependencies: ["CrappKit"])
     ]
 )
