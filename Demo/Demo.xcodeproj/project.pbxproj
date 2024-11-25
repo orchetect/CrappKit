@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,18 +11,17 @@
 		E246D373290CEC6A004BA227 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E246D372290CEC6A004BA227 /* ViewController.swift */; };
 		E246D375290CEC6B004BA227 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E246D374290CEC6B004BA227 /* Assets.xcassets */; };
 		E246D378290CEC6B004BA227 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E246D376290CEC6B004BA227 /* Main.storyboard */; };
-		E2ECE80A290D110000A1D02F /* CrappKit in Frameworks */ = {isa = PBXBuildFile; productRef = E2ECE809290D110000A1D02F /* CrappKit */; };
+		E2C1790E2CF4AC6100BE21A1 /* CrappKit in Frameworks */ = {isa = PBXBuildFile; productRef = E2C1790D2CF4AC6100BE21A1 /* CrappKit */; };
 		E2ECE80C290D1D3C00A1D02F /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ECE80B290D1D3C00A1D02F /* Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E246D36D290CEC6A004BA227 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E246D370290CEC6A004BA227 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E246D372290CEC6A004BA227 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E246D374290CEC6B004BA227 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E246D377290CEC6B004BA227 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E246D379290CEC6B004BA227 /* Demo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Demo.entitlements; sourceTree = "<group>"; };
-		E246D38A290D1089004BA227 /* CrappKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = CrappKit; path = ..; sourceTree = "<group>"; };
+		E2C1790F2CF4AC6D00BE21A1 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2ECE80B290D1D3C00A1D02F /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -31,7 +30,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2ECE80A290D110000A1D02F /* CrappKit in Frameworks */,
+				E2C1790E2CF4AC6100BE21A1 /* CrappKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,19 +40,9 @@
 		E246D364290CEC6A004BA227 = {
 			isa = PBXGroup;
 			children = (
-				E246D389290D1089004BA227 /* Packages */,
 				E246D36F290CEC6A004BA227 /* Demo */,
-				E246D36E290CEC6A004BA227 /* Products */,
-				E2ECE808290D110000A1D02F /* Frameworks */,
+				E2C1790F2CF4AC6D00BE21A1 /* Demo.app */,
 			);
-			sourceTree = "<group>";
-		};
-		E246D36E290CEC6A004BA227 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				E246D36D290CEC6A004BA227 /* Demo.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		E246D36F290CEC6A004BA227 /* Demo */ = {
@@ -67,21 +56,6 @@
 				E246D379290CEC6B004BA227 /* Demo.entitlements */,
 			);
 			path = Demo;
-			sourceTree = "<group>";
-		};
-		E246D389290D1089004BA227 /* Packages */ = {
-			isa = PBXGroup;
-			children = (
-				E246D38A290D1089004BA227 /* CrappKit */,
-			);
-			name = Packages;
-			sourceTree = "<group>";
-		};
-		E2ECE808290D110000A1D02F /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -101,10 +75,10 @@
 			);
 			name = Demo;
 			packageProductDependencies = (
-				E2ECE809290D110000A1D02F /* CrappKit */,
+				E2C1790D2CF4AC6100BE21A1 /* CrappKit */,
 			);
 			productName = DAKTest;
-			productReference = E246D36D290CEC6A004BA227 /* Demo.app */;
+			productReference = E2C1790F2CF4AC6D00BE21A1 /* Demo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -131,7 +105,10 @@
 				Base,
 			);
 			mainGroup = E246D364290CEC6A004BA227;
-			productRefGroup = E246D36E290CEC6A004BA227 /* Products */;
+			packageReferences = (
+				E2C1790C2CF4AC6100BE21A1 /* XCLocalSwiftPackageReference "../../CrappKit" */,
+			);
+			productRefGroup = E246D364290CEC6A004BA227;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -237,6 +214,7 @@
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
@@ -293,6 +271,7 @@
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
 			};
 			name = Release;
 		};
@@ -323,7 +302,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.orchetect.CrappKit.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -354,7 +332,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.orchetect.CrappKit.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -381,8 +358,15 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		E2C1790C2CF4AC6100BE21A1 /* XCLocalSwiftPackageReference "../../CrappKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../../CrappKit;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
-		E2ECE809290D110000A1D02F /* CrappKit */ = {
+		E2C1790D2CF4AC6100BE21A1 /* CrappKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CrappKit;
 		};

@@ -88,7 +88,7 @@ class ViewController: NSViewController {
     }
 }
 
-func MyView() -> some NSView {
+@MainActor func MyView() -> some NSView {
     CKHStack {
         CKText("Hello")
         CKText("World")
